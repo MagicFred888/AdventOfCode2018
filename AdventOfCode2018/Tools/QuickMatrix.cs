@@ -28,58 +28,6 @@ public class QuickMatrix
 
     private CellInfo[,] _data;
 
-    public class CellInfo
-    {
-        public Point Position { get; init; }
-        public string StringVal { get; set; } = "";
-        public long LongVal { get; set; } = 0;
-        public bool BoolVal { get; set; } = false;
-        public object? ObjectVal { get; set; } = null;
-        public bool IsValid => Position.X >= 0;
-
-        public CellInfo(int x, int y, string stringVal)
-        {
-            Position = new Point(x, y);
-            StringVal = stringVal;
-        }
-
-        public CellInfo(int x, int y, long longVal)
-        {
-            Position = new Point(x, y);
-            LongVal = longVal;
-        }
-
-        public CellInfo(int x, int y, bool boolVal)
-        {
-            Position = new Point(x, y);
-            BoolVal = boolVal;
-        }
-
-        public override string ToString()
-        {
-            return StringVal == null ? "NULL" : StringVal.ToString();
-        }
-
-        public CellInfo Clone()
-        {
-            // return a deep copy
-            return new CellInfo(Position.X, Position.Y, StringVal)
-            {
-                LongVal = LongVal,
-                BoolVal = BoolVal,
-                ObjectVal = ObjectVal
-            };
-        }
-
-        public void Set(CellInfo cellInfo)
-        {
-            StringVal = cellInfo.StringVal;
-            LongVal = cellInfo.LongVal;
-            BoolVal = cellInfo.BoolVal;
-            ObjectVal = cellInfo.ObjectVal;
-        }
-    }
-
     public int ColCount { get; private set; }
 
     public int RowCount { get; private set; }

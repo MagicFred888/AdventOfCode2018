@@ -1,4 +1,6 @@
-﻿using System.Drawing;
+﻿using System.Diagnostics;
+using System.Drawing;
+using System.Text;
 
 namespace AdventOfCode2018.Tools;
 
@@ -19,14 +21,6 @@ public class QuickGrid
         All
     }
 
-    public class CellInfo(Point position, long value)
-    {
-        public Point Position { get; init; } = position;
-        public long Value { get; set; } = value;
-
-        public override string ToString() => $"{Position} : {Value}";
-    }
-
     private readonly Dictionary<TouchingMode, List<Point>> _touchingMode = new()
     {
         { TouchingMode.Horizontal, new() { new Point(-1, 0), new Point(1, 0) } },
@@ -36,6 +30,17 @@ public class QuickGrid
     };
 
     private readonly Dictionary<Point, CellInfo> _allCells = [];
+
+    public QuickGrid()
+    {
+        MinX = 0;
+        MaxX = 0;
+        MinY = 0;
+        MaxY = 0;
+        NbrRow = 1;
+        NbrCol = 1;
+        _allCells.Add(new(0, 0), new(new(0, 0), 0));
+    }
 
     public QuickGrid(int xMin, int xMax, int yMin, int yMax, long defaultValue)
     {
@@ -82,5 +87,19 @@ public class QuickGrid
         return result;
     }
 
-    public List<CellInfo> Cells => _allCells.ToList().ConvertAll(c => c.Value);
+    public void DebugPrint()
+    {
+        for (int y = MinY; y <= MaxY; y++)
+        {
+            StringBuilder line = new();
+            for (int x = MinX; x <= MaxX; x++)
+            {
+                CellInfo? cell = Cell(x, y);
+                line.Append(cell == null ? "?" : cell.ToString(CellInfoContentType.Long));
+            }
+            Debug.WriteLine(line);
+        }
+    }
+
+    public List<CellInfo> Cells => new(_allCells.Values);
 }
