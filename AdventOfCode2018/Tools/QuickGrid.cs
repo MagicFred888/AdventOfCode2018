@@ -60,6 +60,24 @@ public class QuickGrid
         }
     }
 
+    public QuickGrid(int xMin, int xMax, int yMin, int yMax, string defaultValue)
+    {
+        MinX = xMin;
+        MaxX = xMax;
+        MinY = yMin;
+        MaxY = yMax;
+        NbrRow = yMax - yMin + 1;
+        NbrCol = xMax - xMin + 1;
+
+        for (int x = xMin; x <= xMax; x++)
+        {
+            for (int y = yMin; y <= yMax; y++)
+            {
+                _allCells.Add(new(x, y), new(new(x, y), defaultValue));
+            }
+        }
+    }
+
     public CellInfo? Cell(Point position) => Cell(position.X, position.Y);
 
     public CellInfo? Cell(int x, int y)
@@ -87,18 +105,25 @@ public class QuickGrid
         return result;
     }
 
-    public void DebugPrint()
+    public void DebugPrint(CellInfoContentType contentType)
     {
+        Debug.WriteLine(GetDebugPrintLines(contentType));
+    }
+
+    public List<string> GetDebugPrintLines(CellInfoContentType contentType)
+    {
+        List<string> lines = [];
         for (int y = MinY; y <= MaxY; y++)
         {
             StringBuilder line = new();
             for (int x = MinX; x <= MaxX; x++)
             {
                 CellInfo? cell = Cell(x, y);
-                line.Append(cell == null ? "?" : cell.ToString(CellInfoContentType.Long));
+                line.Append(cell == null ? "?" : cell.ToString(contentType));
             }
-            Debug.WriteLine(line);
+            lines.Add(line.ToString());
         }
+        return lines;
     }
 
     public List<CellInfo> Cells => new(_allCells.Values);
