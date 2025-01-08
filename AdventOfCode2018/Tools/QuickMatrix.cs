@@ -153,6 +153,7 @@ public class QuickMatrix
                 clone._data[x, y] = _data[x, y].Clone();
             }
         }
+        clone.ComputeOtherProperties();
         return clone;
     }
 
