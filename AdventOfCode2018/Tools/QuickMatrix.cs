@@ -436,13 +436,28 @@ public class QuickMatrix
         return result;
     }
 
-    internal List<CellInfo> GetNeighbours(CellInfo cell)
+    public List<CellInfo> GetNeighbours(CellInfo cell, TouchingMode touchingMode = TouchingMode.All)
     {
         // Get all neighbours
         List<CellInfo> result = [];
-        foreach (Point move in _touchingMode[TouchingMode.All])
+        foreach (Point move in _touchingMode[touchingMode])
         {
             Point nextPosition = cell.Position.Add(move);
+            if (Cell(nextPosition).IsValid)
+            {
+                result.Add(Cell(nextPosition));
+            }
+        }
+        return result;
+    }
+
+    public List<CellInfo> GetNeighbours(Point position, TouchingMode touchingMode = TouchingMode.All)
+    {
+        // Get all neighbours
+        List<CellInfo> result = [];
+        foreach (Point move in _touchingMode[touchingMode])
+        {
+            Point nextPosition = position.Add(move);
             if (Cell(nextPosition).IsValid)
             {
                 result.Add(Cell(nextPosition));
