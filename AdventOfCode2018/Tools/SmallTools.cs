@@ -100,6 +100,19 @@ public static class SmallTools
     }
 
     /// <summary>
+    /// Calculates the sum of factors of a given number.
+    /// Reference: https://en.wikipedia.org/wiki/Divisor_function
+    /// </summary>
+    /// <param name="number">The number to calculate the sum of factors for.</param>
+    /// <returns>The sum of factors of the given number.</returns>
+    public static long SumOfFactors(long number)
+    {
+        // Decompose v into prime factors
+        List<long> primeFactor = SmallTools.PrimeDecomposition(number);
+        return primeFactor.Aggregate(1L, (acc, val) => acc * (long)((Math.Pow(val, 2) - 1) / (val - 1)));
+    }
+
+    /// <summary>
     /// Prints a 2D array of objects to the debug output, converting values using a dictionary if provided.
     /// </summary>
     /// <param name="tmpTable">The 2D array of objects to print.</param>
