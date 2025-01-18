@@ -78,13 +78,13 @@ public class QuickGrid
         }
     }
 
-    public CellInfo? Cell(Point position) => Cell(position.X, position.Y);
+    public CellInfo Cell(Point position) => Cell(position.X, position.Y);
 
-    public CellInfo? Cell(int x, int y)
+    public CellInfo Cell(int x, int y)
     {
         if (x < MinX || x > MaxX || y < MinY || y > MaxY)
         {
-            return null;
+            return new CellInfo(new(int.MinValue, int.MinValue), "");
         }
         return _allCells[new(x, y)];
     }
@@ -107,7 +107,7 @@ public class QuickGrid
 
     public void DebugPrint(CellInfoContentType contentType)
     {
-        Debug.WriteLine(GetDebugPrintLines(contentType));
+        Debug.WriteLine(string.Join("\r\n", GetDebugPrintLines(contentType)));
     }
 
     public List<string> GetDebugPrintLines(CellInfoContentType contentType)

@@ -20,7 +20,7 @@ namespace AdventOfCode2018.Solver
             QuickGrid grid = new(smallestBoundingBox.Left, smallestBoundingBox.Right, smallestBoundingBox.Top, smallestBoundingBox.Bottom, " ");
             foreach ((Point position, _) in _points)
             {
-                grid.Cell(position.X, position.Y)!.StringVal = "#";
+                grid.Cell(position.X, position.Y).StringVal = "#";
             }
             return string.Join(Environment.NewLine + "   ", grid.GetDebugPrintLines(CellInfoContentType.String));
         }

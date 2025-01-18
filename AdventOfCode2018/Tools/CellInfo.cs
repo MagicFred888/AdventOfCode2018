@@ -17,7 +17,7 @@ namespace AdventOfCode2018.Tools
         public long LongVal { get; set; } = 0;
         public bool BoolVal { get; set; } = false;
         public object? ObjectVal { get; set; } = null;
-        public bool IsValid => Position.X >= 0;
+        public bool IsValid => Position.X != int.MinValue && Position.Y != int.MinValue;
 
         public CellInfo(int x, int y, string stringVal) : this(new Point(x, y), stringVal)
         { }
