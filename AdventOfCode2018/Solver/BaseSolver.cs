@@ -108,7 +108,11 @@ namespace AdventOfCode2018.Solver
                 string answer = roundId == RoundId.FirstRound ? GetSolution1(false) : GetSolution2(false);
                 _stopwatch.Stop();
                 string testId = ExtractSampleIdRegex().Match(Path.GetFileNameWithoutExtension(ds.TestFileName)).Groups["TestID"].Value;
-                if (answer == ds.RoundIdAnswers[(int)roundId])
+                if (string.IsNullOrEmpty(answer))
+                {
+                    results.Add($"SAMPLE {testId} HAS BEEN SKIPPED !");
+                }
+                else if (answer == ds.RoundIdAnswers[(int)roundId])
                 {
                     results.Add($"SAMPLE {testId} PASSED: {answer} found in {GetProperUnitAndRounding(_stopwatch.Elapsed.TotalMilliseconds)}");
                 }
