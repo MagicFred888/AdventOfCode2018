@@ -23,12 +23,26 @@
             {
                 _allNodes.Add(nodeName, new Node(nodeName));
             }
-            foreach (Node node in _allNodes.Values)
+            foreach ((string from, string to, long distance) in allPair)
             {
-                // Extract all item linked to current Node
-                List<(string from, string to, long distance)> pairToLink = [.. allPair.FindAll(p => p.from == node.Name || p.to == node.Name)];
-                node.Links = pairToLink.ConvertAll(p => new KeyValuePair<Node, long>(_allNodes[p.from == node.Name ? p.to : p.from], p.distance))
-                                       .ToDictionary(p => p.Key, p => p.Value);
+                Node fromNode = _allNodes[from];
+                Node toNode = _allNodes[to];
+                if (!fromNode.Links.TryGetValue(toNode, out long value1))
+                {
+                    fromNode.Links.Add(toNode, distance);
+                }
+                else if (value1 != distance)
+                {
+                    throw new InvalidDataException("Distance not same in different direction");
+                }
+                if (!toNode.Links.TryGetValue(fromNode, out long value2))
+                {
+                    toNode.Links.Add(fromNode, distance);
+                }
+                else if (value2 != distance)
+                {
+                    throw new InvalidDataException("Distance not same in different direction");
+                }
             }
         }
 

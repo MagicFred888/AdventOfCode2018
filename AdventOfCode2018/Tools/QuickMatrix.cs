@@ -64,6 +64,24 @@ public class QuickMatrix
         ComputeOtherProperties();
     }
 
+    public QuickMatrix(int col, int row, long defaultValue)
+    {
+        ColCount = col;
+        RowCount = row;
+        _data = new CellInfo[col, row];
+        _touchingSearch = new bool[col, row];
+        for (int y = 0; y < RowCount; y++)
+        {
+            for (int x = 0; x < ColCount; x++)
+            {
+                _data[x, y] = new CellInfo(x, y, defaultValue);
+            }
+        }
+
+        // Compute other properties
+        ComputeOtherProperties();
+    }
+
     public QuickMatrix(List<string> rawData, string trueValue)
     {
         // Extract data
@@ -318,7 +336,7 @@ public class QuickMatrix
     {
         if (x < 0 || x >= ColCount || y < 0 || y >= RowCount)
         {
-            return new CellInfo(-1, -1, "");
+            return new CellInfo(int.MinValue, int.MinValue, "");
         }
         return _data[x, y];
     }
