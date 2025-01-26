@@ -113,7 +113,8 @@
         {
             if (!_allNodes.TryGetValue(refNodeName, out Node? startNode))
             {
-                throw new ArgumentException($"Node {refNodeName} does not exist in the network.");
+                // Node not in network so mean alone
+                return [refNodeName];
             }
 
             HashSet<Node> visited = [];
